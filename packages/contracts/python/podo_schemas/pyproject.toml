@@ -1,0 +1,15 @@
+[project]
+name = "podo-schemas"
+version = "0.1.0"
+description = "Shared Pydantic contracts for the PODO trading operations platform"
+requires-python = ">=3.11"
+dependencies = [
+  "pydantic>=2.7,<3",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
