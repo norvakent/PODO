@@ -28,6 +28,8 @@ packages/contracts/python/podo_schemas/src/podo_schemas/
 
 `market.py` defines normalized instruments, ticks, candles, order books, and market snapshots.
 
+`collectors.py` defines OHLCV collectors for KIS, Upbit, and Binance. Upbit and Binance use `ccxt.fetch_ohlcv`; KIS uses the Korea Investment domestic stock chart REST API and returns the same `Candle` schema.
+
 `trading.py` defines accounts, orders, fills, positions, cash ledger entries, and paper-trading execution snapshots.
 
 `portfolio.py` defines optimization inputs/outputs, target weights, rebalance plans, and risk contribution outputs.
@@ -44,3 +46,30 @@ packages/contracts/python/podo_schemas/src/podo_schemas/
 - Common models use ISO timestamps and timezone-aware `datetime`.
 - External API models should serialize enums as strings and decimals as JSON-safe values.
 - Commands and events are immutable records once accepted. State changes create new events or snapshots.
+
+## OHLCV Collector Example
+
+```python
+from datetime import UTC, datetime
+
+from podo_schemas import Venue, fetch_ohlcv
+
+binance_candles = fetch_ohlcv(
+    Venue.BINANCE,
+    "BTC/USDT",
+    "1m",
+    since=datetime(2024, 5, 1, tzinfo=UTC),
+    limit=100,
+)
+
+upbit_candles = fetch_ohlcv(Venue.UPBIT, "BTC/KRW", "1d", limit=30)
+
+korean_stock_candles = fetch_ohlcv(
+    Venue.KIS,
+    "005930",
+    "1d",
+    limit=30,
+    kis_app_key="...",
+    kis_app_secret="...",
+)
+```

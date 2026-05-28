@@ -44,6 +44,7 @@ class Candle(PodoModel):
     close: Decimal
     volume: Decimal
     quote_volume: Decimal | None = None
+    raw: RawPayload | None = None
 
 
 class OrderBookLevel(PodoModel):

@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Shared Pydantic contracts for the PODO trading operations platform"
 requires-python = ">=3.11"
 dependencies = [
+  "ccxt>=4.3,<5",
   "pydantic>=2.7,<3",
 ]
 
